@@ -1,0 +1,18 @@
+[project]
+name = "mat-vs-py-bench"
+version = "0.1.0"
+description = "MATLAB/Psychtoolbox vs Python/PsychoPy stimulus timing comparison"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "psychopy>=2024.1",
+]
+
+[project.optional-dependencies]
+# Windows rig only. NI-DAQmx driver must be installed separately.
+rig = ["nidaqmx>=1.0"]
+# For analyze.py
+plot = ["matplotlib>=3.8"]
+
+[tool.uv]
+package = false
