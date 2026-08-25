@@ -1,16 +1,15 @@
-"""T2 -- photodiode ground truth. THE decisive test.
+"""T2 -- photodiode ground truth. The decisive test.
 
-Everything else in this suite is context. This is the measurement that decides
-whether the PsychoPy migration happens.
+The other tests provide context; this is the measurement that decides whether
+the PsychoPy migration is viable.
 
 WIRING
     photodiode aimed at a corner of the stimulus monitor  ->  ai0
     TTL line 'A' BNC on the breakout box                  ->  ai1
 
 Both signals are then digitised by the SAME NI PCIe-6351 clock, so the interval
-between them is measured by the card and owes nothing to either computer's
-software clock. That is the whole trick: no cross-clock assumption survives to
-contaminate the number.
+between them is measured by the card and does not depend on either computer's
+software clock, so no cross-clock assumption enters the number.
 
 WHAT IT PRODUCES
     flip -> photon   : how long after the flip call returns light actually changes
@@ -31,10 +30,8 @@ import time
 
 import numpy as np
 
-from dio import open_dio, parse_config
+from dio import DEFAULT_CONFIG, open_dio, parse_config
 from report import summarise, write_result
-
-DEFAULT_CONFIG = "../psychopy_template/cclab_movie_project/Code/cclab-matlab-tools/cfg/rig-right.txt"
 
 
 # ---------------------------------------------------------------- acquisition
@@ -44,7 +41,7 @@ class AnalogCapture:
 
     Finite (not continuous) on purpose: the run is a few seconds, the whole
     record fits in host RAM, and a finite task needs no reader thread competing
-    with the flip loop. P4 -- no background threads during timing-critical work.
+    with the flip loop -- no background threads during timing-critical work.
     """
 
     def __init__(self, device: str, pd_chan: str, ttl_chan: str,
@@ -216,8 +213,8 @@ def run(config: str, dummy: bool, flips: int, rate: float,
         for i in range(flips):
             if i % 2 == 0:
                 patch.draw()
-            t = win.flip()          # P2: the flip's own timestamp, not the clock
-            dio.pulse(line, 1.0)    # P3: fire immediately after, measure below
+            t = win.flip()          # the flip's own timestamp, not the clock
+            dio.pulse(line, 1.0)    # fire immediately after, measure below
             flip_times.append(t)
         data = cap.read()
     finally:

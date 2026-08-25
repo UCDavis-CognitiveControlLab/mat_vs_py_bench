@@ -9,9 +9,14 @@ Python and MATLAB arms of the benchmark are doing the same thing.
 
 from __future__ import annotations
 
+import os
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
+
+# Rig config lives in the lab's cclab-matlab-tools checkout, whose location varies
+# per machine. Point CCLAB_RIG_CONFIG at it, or copy/symlink cfg/ into this repo.
+DEFAULT_CONFIG = os.environ.get("CCLAB_RIG_CONFIG", "cfg/rig-right.txt")
 
 
 @dataclass
@@ -134,6 +139,9 @@ def _busy_wait(seconds: float) -> None:
 
 
 def open_dio(config: str | Path, dummy: bool = False):
+    # --dummy has to work on a laptop with no rig config present.
+    if dummy and not Path(config).exists():
+        config = Path(__file__).parent / "cfg" / "dummy.txt"
     channels = parse_config(config)
     if dummy or all(c.device == "none" for c in channels):
         return DummyDIO(channels)

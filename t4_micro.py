@@ -1,12 +1,11 @@
 """T4 -- language microbenchmark. Ruling-out evidence only.
 
-This is here because someone will ask "but isn't Python slow?", and the honest
-answer deserves a number rather than a shrug.
+This answers "isn't Python slow?" with a number.
 
-It is deliberately NOT the argument for the migration. Interpreter overhead sits
+It is deliberately not the argument for the migration. Interpreter overhead sits
 last on the list of jitter sources, four to five orders of magnitude below the
-display path. Presenting this as the main evidence would be misleading; omitting
-it entirely leaves the question hanging. One slide, framed as ruling out.
+display path. Presenting it as the main evidence would be misleading; omitting
+it leaves the question open. One slide, framed as ruling out.
 
 Compare against matlab/t4_micro.m -- same loop, same operation counts.
 

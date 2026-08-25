@@ -1,0 +1,7 @@
+j	reward	none	
+A	digout	none	port0/line4
+B	digout	none	port0/line3
+C	digout	none	port0/line5
+D	digout	none	port0/line7
+H	joystick	none	ai0
+V	joystick	none	ai1

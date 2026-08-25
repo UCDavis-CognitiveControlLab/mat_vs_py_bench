@@ -16,7 +16,7 @@ function t0_daq(cfgName, n, line, widthMS)
     if nargin < 4, widthMS  = 1.0;         end
 
     cclabInitDIO(cfgName);
-    cleanup = onCleanup(@() cclabCloseDIO());   % P13: release hardware on any exit
+    cleanup = onCleanup(@() cclabCloseDIO());   % release hardware on any exit
 
     for i = 1:20                                % warm-up, discarded
         cclabPulse(line, widthMS);

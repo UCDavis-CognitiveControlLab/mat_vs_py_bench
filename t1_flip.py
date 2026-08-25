@@ -2,11 +2,11 @@
 
 Question: does win.flip() land on the refresh clock, and how often does it miss?
 
-This does not need the rig, so run it early and often. It cannot prove the
-migration (only T2 does that) but it catches the failure mode that actually
-bites: dropped frames. A dropped frame is a whole refresh period of error --
-16.7ms at 60Hz, three times the entire budget -- and it is caused by code
-discipline, not by language choice.
+This does not need the rig, so run it early and often. It cannot settle the
+migration question (only T2 does that) but it catches the practical failure
+mode: dropped frames. A dropped frame is a whole refresh period of error --
+16.7ms at 60Hz, three times the entire budget -- and it follows from code
+discipline, not from language choice.
 
     uv run python t1_flip.py --frames 3000
 """

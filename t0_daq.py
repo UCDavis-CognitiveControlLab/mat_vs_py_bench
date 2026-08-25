@@ -18,16 +18,14 @@ import time
 
 import numpy as np
 
-from dio import open_dio
+from dio import DEFAULT_CONFIG, open_dio
 from report import summarise, write_result
-
-DEFAULT_CONFIG = "../psychopy_template/cclab_movie_project/Code/cclab-matlab-tools/cfg/rig-right.txt"
 
 
 def run(config: str, dummy: bool, n: int, line: str, width_ms: float) -> np.ndarray:
     dio = open_dio(config, dummy=dummy)
 
-    # P5: quiesce the collector before a timing-critical loop.
+    # quiesce the collector before a timing-critical loop.
     gc.collect()
     gc.freeze()
     gc.disable()

@@ -1,9 +1,9 @@
-"""Preflight -- check the machine before you burn rig time.
+"""Preflight -- check the machine before spending rig time.
 
-Run this the moment you sit down at the rig. Every check here corresponds to a
-way a session has been wasted: no NI driver, wrong screen, sync tests disabled,
-no photodiode swing. Finding out at minute 1 costs nothing; finding out at
-minute 50 costs the booking.
+Run this on sitting down at the rig. Every check corresponds to a way a session
+can be wasted: no NI driver, wrong screen, sync tests disabled, no photodiode
+swing. Catching these at minute 1 costs nothing; catching them at minute 50
+costs the booking.
 
 Exits nonzero if anything is a hard blocker.
 
@@ -18,7 +18,7 @@ import shutil
 import sys
 from pathlib import Path
 
-DEFAULT_CONFIG = "../psychopy_template/cclab_movie_project/Code/cclab-matlab-tools/cfg/rig-right.txt"
+from dio import DEFAULT_CONFIG
 
 OK, WARN, FAIL = "  ok ", " warn", " FAIL"
 _status: list[str] = []
@@ -73,7 +73,9 @@ def c_config(path: str):
         from dio import parse_config
         p = Path(path)
         if not p.exists():
-            raise RuntimeError(f"{p} not found -- is the cclab-matlab-tools submodule checked out?")
+            raise RuntimeError(
+                f"{p} not found -- set CCLAB_RIG_CONFIG or pass --config "
+                "(cclab-matlab-tools/cfg/rig-right.txt)")
         ch = parse_config(p)
         digout = [c.label for c in ch if c.kind == "digout"]
         return f"{p.name}: digout lines {digout}"

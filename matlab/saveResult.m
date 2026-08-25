@@ -16,7 +16,7 @@ function saveResult(name, raw, meta)
     fid = fopen([base '.json'], 'w');
     fwrite(fid, jsonencode(s, 'PrettyPrint', true));
     fclose(fid);
-    writematrix(raw, [base '.csv']);   % CSV not .mat: P9, open formats only
+    writematrix(raw, [base '.csv']);   % CSV not .mat: open formats only
 
     fprintf('  -> %s.json\n', base);
 end
