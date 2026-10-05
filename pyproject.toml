@@ -2,7 +2,9 @@
 name = "mat-vs-py-bench"
 version = "0.1.0"
 description = "MATLAB/Psychtoolbox vs Python/PsychoPy stimulus timing comparison"
-requires-python = ">=3.11"
+# 3.11 only: psychopy needs <3.13 and its Windows dep pyWinhook ships wheels
+# only up to cp311 (newer Pythons try a SWIG source build and fail).
+requires-python = ">=3.11,<3.12"
 dependencies = [
     "numpy>=1.26",
     "psychopy>=2024.1",
