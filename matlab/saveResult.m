@@ -2,7 +2,10 @@ function saveResult(name, raw, meta)
 % Write results next to the Python arm's, in the same shapes:
 % a JSON summary for the slide, and raw samples for re-analysis.
 % Rig time is expensive -- never discard raw samples.
-    outdir = fullfile(fileparts(fileparts(mfilename('fullpath'))), 'results');
+    outdir = getenv('CCLAB_BENCH_RESULTS_DIR');
+    if isempty(outdir)
+        outdir = fullfile(fileparts(fileparts(mfilename('fullpath'))), 'results');
+    end
     if ~exist(outdir, 'dir'), mkdir(outdir); end
     stamp = datestr(datetime('now','TimeZone','UTC'), 'yyyymmddTHHMMSSZ');
     base  = fullfile(outdir, sprintf('%s_%s', name, stamp));
